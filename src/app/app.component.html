@@ -1,20 +1,82 @@
-<hello name="{{ user.name }}"></hello>
+<p>{{ name }}</p>
 
-<ng-template [ngIf]="user.age < 18">
-  <p>Bạn chưa đủ tuổi đi tù</p>
+<header>Test ngFor</header>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Index</th>
+      <th>Check first-last</th>
+      <th>Check chẵn lẻ</th>
+    </tr>
+  </thead>
+  <tbody
+    *ngFor="
+      let u of users;
+      count as total;
+      first as isFirst;
+      last as isLast;
+      index as i;
+      even as isEven;
+      odd as isOdd
+    "
+  >
+    <tr>
+      <td>{{ u.id }}</td>
+      <td>{{ u.name }}</td>
+      <td>{{ u.phone }}</td>
+      <td>{{ u.email }}</td>
+      <td>{{ i }} of {{ total }}</td>
+      <td>
+        <span *ngIf="isFirst"> I am the first</span>
+        <span *ngIf="isLast"> I am the last</span>
+      </td>
+      <td>
+        <span *ngIf="isEven"> vị trí chẵn</span>
+        <span *ngIf="isOdd"> vị trí lẻ</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Cách 2 -->
+<ul>
+  <ng-template
+    ngFor
+    [ngForOf]="users"
+    let-users
+    let-ind="index"
+    let-total="count"
+    let-isFisrt="first"
+    let-islast="last"
+    let-isodd="odd"
+    let-iseven="even"
+  >
+    <li>
+      {{ users.id }} -- {{ users.name }} -- {{ users.phone }} --
+      {{ users.email }}
+      <br />
+      <span *ngIf="isFisrt">i am the fisrt</span>
+      <br />
+      <span *ngIf="islast">i am the last</span>
+      <br />
+      <span>{{ ind }} of {{ total }}</span>
+      <br />
+      <span *ngIf="iseven">chẵn</span>
+      <span *ngIf="isodd">lẻ</span>
+      <br /><br /><br />
+    </li>
+  </ng-template>
+</ul>
+
+<!-- check co gia tri thi se hien thi -->
+<ng-container *ngIf="account.length > 0; else noAccount"
+  ><span> has acount </span>
+</ng-container>
+
+<ng-template #noAccount>
+  <p>no account in your array</p>
 </ng-template>
-{{ name }}
-
-<p>Tên: {{ user.name }}</p>
-
-Tuổi:
-<button type="button" (click)="user.age = user.age - 1">-</button>
-{{ user.age }}
-<button type="button" (click)="user.age = user.age + 1">+</button>
-
-<br />
-<input type="text" [value]="user.name" />
-<button type="button" (click)="handler()">Click me</button>
-<br />
-<!-- 2way binding-->
-<input type="text" [(ngModel)]="name" />
