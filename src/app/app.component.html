@@ -1,4 +1,20 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+<hello name="{{ user.name }}"></hello>
+
+<ng-template [ngIf]="user.age < 18">
+  <p>Bạn chưa đủ tuổi đi tù</p>
+</ng-template>
+{{ name }}
+
+<p>Tên: {{ user.name }}</p>
+
+Tuổi:
+<button type="button" (click)="user.age = user.age - 1">-</button>
+{{ user.age }}
+<button type="button" (click)="user.age = user.age + 1">+</button>
+
+<br />
+<input type="text" [value]="user.name" />
+<button type="button" (click)="handler()">Click me</button>
+<br />
+<!-- 2way binding-->
+<input type="text" [(ngModel)]="name" />
